@@ -1,0 +1,88 @@
+import java.util.Scanner;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
+public class CalculoMediasEscolares {
+
+    public static void main(String[] args) {
+        // Inicializa o Scanner para leitura de entrada do usuário
+        Scanner scanner = new Scanner(System.in);
+        
+        // Define o formato de saída para uma casa decimal (ex: 6.0)
+        // Usa Locale.US para garantir o ponto como separador decimal, 
+        // ou você pode configurar o símbolo separadamente.
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        DecimalFormat df = new DecimalFormat("0.0", symbols);
+
+        // Array para armazenar as 8 notas anuais (4 bimestres * 2 notas/bimestre)
+        double[] notas = new double[8];
+        
+        System.out.println("--- Calculadora de Médias Escolares ---");
+        System.out.println("Por favor, insira as 8 notas anuais (duas por bimestre):");
+        
+        // 1. Receber as 8 notas anuais
+        try {
+            for (int i = 0; i < 8; i++) {
+                int bimestre = (i / 2) + 1; // Calcula o número do bimestre (1 a 4)
+                int notaNum = (i % 2) + 1;  // Calcula o número da nota dentro do bimestre (1 ou 2)
+                
+                System.out.print("Bimestre " + bimestre + ", Nota " + notaNum + ": ");
+                notas[i] = scanner.nextDouble();
+            }
+        } catch (java.util.InputMismatchException e) {
+            System.err.println("\nErro: Por favor, insira apenas números válidos para as notas.");
+            scanner.close();
+            return; // Encerra o programa em caso de erro de entrada
+        }
+        
+        scanner.close(); // Fecha o scanner após a leitura de todas as notas
+
+        // 2. Calcular as Médias Bimestrais
+        
+        // 1º Bimestre: notas[0] e notas[1]
+        double mediaBimestre1 = (notas[0] + notas[1]) / 2.0;
+        
+        // 2º Bimestre: notas[2] e notas[3]
+        double mediaBimestre2 = (notas[2] + notas[3]) / 2.0;
+        
+        // 3º Bimestre: notas[4] e notas[5]
+        double mediaBimestre3 = (notas[4] + notas[5]) / 2.0;
+        
+        // 4º Bimestre: notas[6] e notas[7]
+        double mediaBimestre4 = (notas[6] + notas[7]) / 2.0;
+
+        // 3. Calcular as Médias Semestrais
+        
+        // 1º Semestre: Média do 1º Bimestre e do 2º Bimestre
+        double mediaSemestre1 = (mediaBimestre1 + mediaBimestre2) / 2.0;
+        
+        // 2º Semestre: Média do 3º Bimestre e do 4º Bimestre
+        double mediaSemestre2 = (mediaBimestre3 + mediaBimestre4) / 2.0;
+
+        // 4. Calcular a Média Final
+        
+        // Média Final: Média do 1º Semestre e do 2º Semestre
+        double mediaFinal = (mediaSemestre1 + mediaSemestre2) / 2.0;
+
+        // 5. Apresentar os Resultados
+        System.out.println("\n\n--- Resultados Finais ---\n");
+        
+        // Primeiro Semestre
+        System.out.println("Práticas");
+        System.out.println("1º Bimestre: " + df.format(mediaBimestre1));
+        System.out.println("2º Bimestre: " + df.format(mediaBimestre2));
+        System.out.println("1º Semestre: " + df.format(mediaSemestre1));
+        System.out.println("----------------------");
+        
+        // Segundo Semestre
+        System.out.println("3º Bimestre: " + df.format(mediaBimestre3));
+        System.out.println("4º Bimestre: " + df.format(mediaBimestre4));
+        System.out.println("2º Semestre: " + df.format(mediaSemestre2));
+        System.out.println("-----------------------");
+        
+        // Média Final
+        System.out.println("Média Final: " + df.format(mediaFinal));
+        System.out.println("-----------------------");
+    }
+}
