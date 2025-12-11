@@ -1,0 +1,53 @@
+import java.util.Scanner;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
+public class ConversorTemperatura {
+
+    public static void main(String[] args) {
+        // Inicializa o Scanner para leitura de entrada do usuário
+        Scanner scanner = new Scanner(System.in);
+        
+        // Configura o DecimalFormat para exibir resultados com precisão de duas casas decimais
+        // Utilizamos Locale.US para garantir o ponto como separador decimal, 
+        // o que é comum em exibição de dados científicos e técnicos.
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        // Formato para uma ou duas casas decimais, dependendo da necessidade (ex: 77.0 ou 298.15)
+        DecimalFormat df = new DecimalFormat("0.00", symbols); 
+
+        double celsius;
+
+        System.out.println("--- Conversor de Temperaturas ---");
+        System.out.print("Por favor, digite a temperatura em Celsius (°C): ");
+        
+        // 1. Receber a temperatura em Celsius
+        try {
+            celsius = scanner.nextDouble();
+        } catch (java.util.InputMismatchException e) {
+            System.err.println("\nErro: Por favor, insira um número válido para a temperatura.");
+            scanner.close();
+            return; // Encerra o programa em caso de erro de entrada
+        }
+        
+        scanner.close(); // Fecha o scanner
+
+        // 2. Realizar os cálculos de conversão
+
+        // Conversão para Fahrenheit (°F)
+        // (celsius * 9/5) + 32.0. Note que 9.0/5.0 garante que o cálculo é feito com ponto flutuante.
+        double fahrenheit = (celsius * 9.0 / 5.0) + 32.0; 
+        
+        // Conversão para Kelvin (K)
+        // celsius + 273.15
+        double kelvin = celsius + 273.15;
+
+        // 3. Exibir os Resultados
+        System.out.println("\n--- Resultados da Conversão ---");
+        
+        System.out.println("Temperatura em Celsius: " + df.format(celsius) + " °C");
+        System.out.println("Temperatura em Fahrenheit: " + df.format(fahrenheit) + " °F");
+        System.out.println("Temperatura em Kelvin: " + df.format(kelvin) + " K");
+        System.out.println("---------------------------------");
+    }
+}
